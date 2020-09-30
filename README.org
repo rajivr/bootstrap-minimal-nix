@@ -1,0 +1,72 @@
+#+PROPERTY: header-args:sh :noeval
+
+* Bootstrap Minimal Nix (and Nix Flakes)
+
+This repository provides instructions for getting started with [[https://nixos.org/][Nix]] on your existing Linux OS.
+
+There are multiple ways to installing Nix.
+
+In this repository, we document an approach that involves two specific aspects.
+
+1. Using Nix Flakes in favor of Nix Channels
+
+2. Installing Nix in single-user mode
+
+Since Nix Flakes is still experimental, we need to get the installation tarball directly from Nix CI system ([[https://hydra.nixos.org/jobset/nix/master][Hydra]]).
+
+The instructions below uses evaluation [[https://hydra.nixos.org/eval/1610009][1610009]].
+
+1. Download and extract binary tarball
+
+   #+begin_src sh
+     mkdir /tmp/nix-install
+     cd /tmp/nix-install
+
+     curl -LO https://hydra.nixos.org/build/126257739/download/1/nix-3.0pre20200828_f156513-x86_64-linux.tar.xz
+     tar xvf nix-3.0pre20200828_f156513-x86_64-linux.tar.xz
+   #+end_src
+
+2. Install Nix
+
+   We install Nix with the following options: =--no-daemon=, =--no-channel-add=, and =--no=modify-profile=.
+
+   #+begin_src sh
+     cd nix-3.0pre20200828_f156513-x86_64-linux/
+
+     ./install --no-daemon --no-channel-add --no-modify-profile
+   #+end_src
+
+Nix installation is now done, but we still need to enable flakes support in Nix's configuration file =nix.conf=.
+
+By default Nix looks for its configuration in =/etc/nix/nix.conf=. Because we are doing a single-user installation, this file will not be present. Instead, we create a file =$HOME/.config/nix/nix.conf=, where we enable flake configuration by doing the following.
+
+#+begin_src sh
+  mkdir $HOME/.config/nix
+
+  echo "experimental-features = nix-command flakes" >> $HOME/.config/nix/nix.conf
+#+end_src
+
+With this, our Nix setup is complete.
+
+Even though Nix is installed and setup, it is still completely isolated from our Linux OS environment.
+
+We can pull Nix into our environment by doing
+
+#+begin_src sh
+  source $HOME/.nix-profile/etc/profile.d/nix.sh
+#+end_src
+
+With this, you are all set to start enjoying Nix and Nix Flakes goodness!
+
+** Uninstalling and Upgrading Nix
+
+/Reproducibility/ is one of the key selling points of Nix. In your Nix learning journey, there will come a point where you would want to start from scratch.
+
+If you installed Nix by following the above instruction, then you can uninstall your Nix setup by simply removing these files and directories.
+
+- =/nix/=
+- =$HOME/.config/nix/=
+- =$HOME/.nix-defexpr/=
+- =$HOME/.nix-profile=
+
+
