@@ -14,7 +14,7 @@ In this repository, we document an approach that involves two specific aspects.
 
 Since Nix Flakes is still experimental, we need to get the installation tarball directly from Nix CI system ([[https://hydra.nixos.org/jobset/nix/master][Hydra]]).
 
-The instructions below uses evaluation [[https://hydra.nixos.org/eval/1610009][1610009]].
+The instructions below uses evaluation [[https://hydra.nixos.org/eval/1618056][1618056]].
 
 1. Download and extract binary tarball
 
@@ -22,8 +22,8 @@ The instructions below uses evaluation [[https://hydra.nixos.org/eval/1610009][1
      mkdir /tmp/nix-install
      cd /tmp/nix-install
 
-     curl -LO https://hydra.nixos.org/build/126257739/download/1/nix-3.0pre20200828_f156513-x86_64-linux.tar.xz
-     tar xvf nix-3.0pre20200828_f156513-x86_64-linux.tar.xz
+     curl -LO https://hydra.nixos.org/build/128347132/download/1/nix-3.0pre20201007_5257a25-x86_64-linux.tar.xz
+     tar xvf nix-3.0pre20201007_5257a25-x86_64-linux.tar.xz
    #+end_src
 
 2. Install Nix
@@ -31,7 +31,7 @@ The instructions below uses evaluation [[https://hydra.nixos.org/eval/1610009][1
    We install Nix with the following options: =--no-daemon=, =--no-channel-add=, and =--no=modify-profile=.
 
    #+begin_src sh
-     cd nix-3.0pre20200828_f156513-x86_64-linux/
+     cd nix-3.0pre20201007_5257a25-x86_64-linux/
 
      ./install --no-daemon --no-channel-add --no-modify-profile
    #+end_src
